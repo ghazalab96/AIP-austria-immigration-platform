@@ -28,8 +28,15 @@ exports.register = async (req, res) => {
     users.push(newUser);
     saveUsers(users);
 
+    const token = jwt.sign(
+      { id: newUser.id, email: newUser.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
     res.json({
       message: "User created",
+      token,
       user: {
         id: newUser.id,
         email: newUser.email

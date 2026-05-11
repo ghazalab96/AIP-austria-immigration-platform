@@ -3,5 +3,15 @@
     "id": 1778488208834,
     "email": "test2@test.com",
     "password": "$2b$10$swD7i2Z/6N/FMsQL/0AC8OgH0fboFL4s0REhYyqh7PqY.SWAbdELa"
+  },
+  {
+    "id": 1778499015175,
+    "email": "test3@test.com",
+    "password": "$2b$10$vnQz/J0T3so57d4zBUKUbOoXuL9/TwhLJCDAG8qZYznyPBcPxWPl2"
+  },
+  {
+    "id": 1778499320583,
+    "email": "test4@test.com",
+    "password": "$2b$10$uwIBK1boiKrBvg3pNigha.eQ084a9oiIJpfJiBgweVhYOtoB2NSNi"
   }
 ]

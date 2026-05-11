@@ -140,44 +140,41 @@ body {
 
 .services {
   display: grid;
-  grid-template-columns: repeat(3, minmax(230px, 300px));
+  grid-template-columns: repeat(3, 300px);
   gap: 35px;
   padding: 55px 55px 35px;
   justify-content: center;
+  align-items: stretch;
 }
 
 .service-card {
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 1 / 1;
+  width: 300px;
+  height: 300px;
   background: white;
   text-align: center;
-  padding: 30px 24px;
+  padding: 28px 24px;
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(15, 23, 42, 0.12);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.16);
+  justify-content: center;
 }
 
 .icon-circle {
-  width: 105px;
-  height: 105px;
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
-  margin: 0 auto 22px;
+  margin: 0 auto 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 42px;
+  font-size: 34px;
+  flex-shrink: 0;
 }
+
 
 .blue {
   background: #dbeafe;
@@ -193,22 +190,24 @@ body {
 
 .service-card h3 {
   color: #07326b;
-  font-size: 22px;
-  margin: 0 0 15px;
+  font-size: 20px;
+  margin: 0 0 10px;
 }
 
 .service-card p {
   color: #374151;
-  line-height: 1.6;
+  line-height: 1.45;
   margin: 0;
+  font-size: 15px;
 }
 
 .card-line {
   display: block;
   width: 55px;
   height: 4px;
-  margin: 28px auto 0;
+  margin: 18px auto 0;
   border-radius: 10px;
+  flex-shrink: 0;
 }
 
 .blue-line {
@@ -294,6 +293,65 @@ body {
   margin: 0;
 }
 
+.content-page {
+  min-height: 520px;
+  padding: 70px 55px;
+  background: #f8fafc;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-title h2 {
+  color: #07326b;
+  font-size: 36px;
+  margin: 0 0 10px;
+}
+
+.section-title p {
+  color: #6b7280;
+  font-size: 17px;
+  margin: 0;
+}
+
+.university-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  justify-content: center;
+  gap: 30px;
+}
+
+.university-card,
+.faq-item,
+.contact-box {
+  background: white;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.1);
+}
+
+.university-card h3,
+.faq-item h3 {
+  color: #07326b;
+  margin-top: 0;
+}
+
+.faq-list {
+  max-width: 850px;
+  margin: 0 auto;
+  display: grid;
+  gap: 20px;
+}
+
+.contact-box {
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
 /* Tablet */
 @media (max-width: 900px) {
   .top-header {
@@ -322,7 +380,7 @@ body {
   }
 
   .services {
-    grid-template-columns: repeat(2, minmax(230px, 300px));
+    grid-template-columns: repeat(2, 300px);
     justify-content: center;
     padding: 40px 25px;
   }
@@ -331,6 +389,11 @@ body {
     grid-template-columns: 1fr;
     margin: 20px 25px 40px;
   }
+
+  .university-grid {
+    grid-template-columns: repeat(2, 300px);
+  }
+
 }
 
 /* Mobile */
@@ -398,14 +461,23 @@ body {
     font-size: 15px;
   }
 
+  .content-page {
+    padding: 45px 18px;
+  }
+
+  .university-grid {
+    grid-template-columns: 300px;
+  }
+
   .services {
-    grid-template-columns: minmax(230px, 300px);
+    grid-template-columns: 300px;
     justify-content: center;
     padding: 35px 18px;
   }
 
   .service-card {
-    max-width: 300px;
+    width: 300px;
+    height: 300px;
   }
   
   .about {
