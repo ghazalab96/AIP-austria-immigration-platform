@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const applicationRoutes = require("./routes/application.routes");
+const visaRoutes = require("./routes/visa.routes");
 
 
 const userRoutes = require("./routes/user.routes");
@@ -13,6 +15,8 @@ app.use(express.json());
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/applications", applicationRoutes);
+app.use("/api/visa", visaRoutes);
 
 app.get("/", (req, res) => {
   res.send("AIP Backend Running");
