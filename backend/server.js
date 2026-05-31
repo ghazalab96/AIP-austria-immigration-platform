@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const applicationRoutes = require("./routes/application.routes");
@@ -10,6 +11,7 @@ const authRoutes = require("./routes/auth.routes");
 const profileRoutes = require("./routes/profile.routes");
 const checklistRoutes = require("./routes/checklist.routes");
 const universityRoutes = require("./routes/university.routes");
+const sessionRoutes = require("./routes/session.routes");
 
 const app = express();
 
@@ -25,6 +27,7 @@ app.use("/api/visa", visaRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/checklist", checklistRoutes);
 app.use("/api/universities", universityRoutes);
+app.use("/api/session-request", sessionRoutes);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/pages/home.html"));

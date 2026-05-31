@@ -24,7 +24,7 @@
         <button class="sidebar-link active" data-section="overview">Overview</button>
         <button class="sidebar-link" data-section="profile">Profile</button>
         <button class="sidebar-link" data-section="checklist">Checklist</button>
-        <button class="sidebar-link" data-section="application">Session Request</button>
+        <button class="sidebar-link" data-section="session-request">Session Request</button>
       </nav>
 
       <button id="logoutBtn" class="logout-btn">Logout</button>
@@ -460,49 +460,111 @@
 </section>
 
       <!-- SESSION REQUEST -->
+<!-- SESSION REQUEST -->
 <section class="dashboard-section" id="session-request">
   <div class="page-title">
     <h2>Online Session Request</h2>
-    <p>Request an online session for your Austrian student visa preparation.</p>
+    <p>Request an online consultation for your Austrian student visa preparation.</p>
   </div>
 
-  <div class="panel-card">
-    <form id="sessionRequestForm">
-      <div class="form-group">
-        <label>Session Topic</label>
-        <select id="sessionTopic" required>
-          <option value="">Select topic</option>
-          <option value="Document review">Document review</option>
-          <option value="Student visa guidance">Student visa guidance</option>
-          <option value="University admission question">University admission question</option>
-          <option value="Financial proof question">Financial proof question</option>
-          <option value="General consultation">General consultation</option>
-        </select>
+  <div class="session-layout">
+    <!-- LEFT SIDE: FORM -->
+    <div class="panel-card">
+      <h3 class="session-card-title">Request a Session</h3>
+      <p class="session-card-text">
+        Fill in your preferred topic, date and time. Your request will be reviewed later.
+      </p>
+
+      <form id="sessionRequestForm" class="session-form">
+        <div class="form-group">
+          <label>Session Topic</label>
+          <select id="sessionTopic" required>
+            <option value="">Select topic</option>
+            <option value="Document review">Document review</option>
+            <option value="Student visa guidance">Student visa guidance</option>
+            <option value="University admission question">University admission question</option>
+            <option value="Financial proof question">Financial proof question</option>
+            <option value="General consultation">General consultation</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date" id="preferredDate" required />
+        </div>
+
+        <div class="form-group">
+          <label>Preferred Time</label>
+          <input type="time" id="preferredTime" required />
+        </div>
+
+        <div class="form-group full-width">
+          <label>Message</label>
+          <textarea 
+            id="sessionMessage" 
+            rows="5" 
+            placeholder="Write a short message about what you need help with."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="primary-btn">
+          Submit Request
+        </button>
+
+        <p id="sessionRequestMessage" class="message"></p>
+      </form>
+    </div>
+
+    <!-- RIGHT SIDE: INFO / STATUS -->
+    <div class="panel-card session-info-card">
+      <span class="session-label">Online Consultation</span>
+
+      <h3>How it works</h3>
+
+      <div class="session-steps">
+        <div class="session-step">
+          <strong>1</strong>
+          <p>Complete your profile and checklist.</p>
+        </div>
+
+        <div class="session-step">
+          <strong>2</strong>
+          <p>Send your online session request.</p>
+        </div>
+
+        <div class="session-step">
+          <strong>3</strong>
+          <p>Your request will be reviewed and prepared for consultation.</p>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Preferred Date</label>
-        <input type="date" id="preferredDate" required />
+      <div class="session-status-box">
+        <span>Current Status</span>
+        <strong id="sessionCurrentStatus">No request submitted yet</strong>
+
+        <div class="session-details-box" id="sessionDetailsBox">
+          <p>
+            <span>Requested Session Date:</span>
+            <strong id="sessionRequestedDate">Not available</strong>
+          </p>
+
+          <p>
+            <span>Requested Session Time:</span>
+            <strong id="sessionRequestedTime">Not available</strong>
+          </p>
+
+          <p>
+            <span>Request Submitted At:</span>
+            <strong id="sessionCreatedAt">Not available</strong>
+          </p>
+
+           <button id="deleteSessionRequestBtn" class="danger-btn hidden" type="button">
+            Cancel Session Request
+          </button>
+
+        </div>
       </div>
-
-      <div class="form-group">
-        <label>Preferred Time</label>
-        <input type="time" id="preferredTime" required />
-      </div>
-
-      <div class="form-group">
-        <label>Message</label>
-        <textarea 
-          id="sessionMessage" 
-          rows="4" 
-          placeholder="Write a short message about what you need help with."
-        ></textarea>
-      </div>
-
-      <button type="submit" class="primary-btn">Submit Session Request</button>
-
-      <p id="sessionRequestMessage" class="message"></p>
-    </form>
+    </div>
   </div>
 </section>
 

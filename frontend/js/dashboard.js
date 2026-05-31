@@ -61,6 +61,7 @@ const checklistOverviewCard = document.getElementById("checklistOverviewCard");
 const checklistOverviewStatus = document.getElementById("checklistOverviewStatus");
 const checklistOverviewText = document.getElementById("checklistOverviewText");
 const overviewChecklistProgressFill = document.getElementById("overviewChecklistProgressFill");
+
 const overviewProfileName = document.getElementById("overviewProfileName");
 const overviewProfileUniversity = document.getElementById("overviewProfileUniversity");
 const overviewProfileStudyLevel = document.getElementById("overviewProfileStudyLevel");
@@ -72,11 +73,25 @@ const sessionOverviewStatus = document.getElementById("sessionOverviewStatus");
 const sessionOverviewText = document.getElementById("sessionOverviewText");
 
 const overviewRecommendedAction = document.getElementById("overviewRecommendedAction");
-
 const overviewActionButtons = document.querySelectorAll("[data-go-section]");
 
-let currentProfile = null;
+// Session request elements
+const sessionRequestForm = document.getElementById("sessionRequestForm");
+const sessionTopicInput = document.getElementById("sessionTopic");
+const preferredDateInput = document.getElementById("preferredDate");
+const preferredTimeInput = document.getElementById("preferredTime");
+const sessionMessageInput = document.getElementById("sessionMessage");
+const sessionRequestMessage = document.getElementById("sessionRequestMessage");
+const sessionCurrentStatus = document.getElementById("sessionCurrentStatus");
 
+const sessionRequestedDate = document.getElementById("sessionRequestedDate");
+const sessionRequestedTime = document.getElementById("sessionRequestedTime");
+const sessionCreatedAt = document.getElementById("sessionCreatedAt");
+const deleteSessionRequestBtn = document.getElementById("deleteSessionRequestBtn");
+
+let currentProfile = null;
+let hasSessionRequest = false;
+let latestSessionRequestId = null;
 
 // =============================
 // 1. Protect Dashboard
@@ -86,7 +101,6 @@ if (!token) {
   window.location.href = "/pages/login.html";
 }
 
-
 // =============================
 // 2. Show User Info
 // =============================
@@ -94,7 +108,6 @@ if (!token) {
 if (user && user.email && userEmail) {
   userEmail.textContent = user.email;
 }
-
 
 // =============================
 // 3. Helper: Auth Headers
@@ -108,6 +121,11 @@ const getAuthHeaders = () => {
 };
 
 
+
+// =============================
+// 4. Overview Helpers
+// =============================
+
 const isProfileComplete = (profile) => {
   if (!profile) return false;
 
@@ -119,6 +137,18 @@ const isProfileComplete = (profile) => {
     profile.targetProgram &&
     profile.studyLevel
   );
+};
+
+const getChecklistInputs = () => {
+  return [
+    admissionLetterInput,
+    passportInput,
+    financialProofInput,
+    healthInsuranceInput,
+    accommodationProofInput,
+    passportPhotoInput,
+    applicationFormInput
+  ];
 };
 
 const getChecklistProgress = () => {
@@ -242,7 +272,9 @@ const updateOverview = () => {
     });
 
     if (missingItems.length === 0) {
-      overviewMissingChecklist.innerHTML = `<li class="completed-text">All checklist items are completed.</li>`;
+      overviewMissingChecklist.innerHTML = `
+        <li class="completed-text">All checklist items are completed.</li>
+      `;
     } else {
       overviewMissingChecklist.innerHTML = missingItems
         .map((item) => `<li>${item}</li>`)
@@ -250,26 +282,27 @@ const updateOverview = () => {
     }
   }
 
-  // Session request card, for now static
+  // Session request card
   setStatusStyle(
     sessionOverviewStatus,
-    false,
+    hasSessionRequest,
     "Requested",
     "Not Requested"
   );
 
-  setCardStyle(sessionOverviewCard, false);
+  setCardStyle(sessionOverviewCard, hasSessionRequest);
 
   if (sessionOverviewText) {
-    sessionOverviewText.textContent =
-      "Request an online consultation after completing your profile and checklist.";
+    sessionOverviewText.textContent = hasSessionRequest
+      ? "Your online session request has been submitted and is currently pending."
+      : "Request an online consultation after completing your profile and checklist.";
   }
 
   // Overall progress
   const overallSteps = [
     profileComplete,
     checklistComplete,
-    false
+    hasSessionRequest
   ];
 
   const completedSteps = overallSteps.filter(Boolean).length;
@@ -279,14 +312,20 @@ const updateOverview = () => {
     overviewProgressPercent.textContent = `${overallPercent}%`;
   }
 
-  // Next step texts
+  // Next step text
   if (overviewNextStep) {
     if (!profileComplete) {
-      overviewNextStep.textContent = "Complete your profile to continue your student visa preparation.";
+      overviewNextStep.textContent =
+        "Complete your profile to continue your student visa preparation.";
     } else if (!checklistComplete) {
-      overviewNextStep.textContent = "Complete your checklist before requesting an online session.";
+      overviewNextStep.textContent =
+        "Complete your checklist before requesting an online session.";
+    } else if (!hasSessionRequest) {
+      overviewNextStep.textContent =
+        "You are ready to request an online session.";
     } else {
-      overviewNextStep.textContent = "You are ready to request an online session.";
+      overviewNextStep.textContent =
+        "Your online session request has been submitted.";
     }
   }
 
@@ -297,70 +336,60 @@ const updateOverview = () => {
     } else if (!checklistComplete) {
       overviewRecommendedAction.textContent =
         "Continue with your student visa checklist and mark the documents you already have.";
-    } else {
+    } else if (!hasSessionRequest) {
       overviewRecommendedAction.textContent =
         "Your profile and checklist are ready. You can now submit an online session request.";
+    } else {
+      overviewRecommendedAction.textContent =
+        "Your session request is submitted. Please wait for the next update.";
     }
   }
 };
 
 // =============================
-// 4. Sidebar Navigation
+// 5. Sidebar Navigation
 // =============================
+
+const showDashboardSection = (targetSection) => {
+  sidebarLinks.forEach((item) => {
+    item.classList.remove("active");
+  });
+
+  const targetSidebarButton = document.querySelector(
+    `.sidebar-link[data-section="${targetSection}"]`
+  );
+
+  if (targetSidebarButton) {
+    targetSidebarButton.classList.add("active");
+  }
+
+  dashboardSections.forEach((section) => {
+    section.classList.remove("active-section");
+  });
+
+  const selectedSection = document.getElementById(targetSection);
+
+  if (selectedSection) {
+    selectedSection.classList.add("active-section");
+  }
+};
 
 sidebarLinks.forEach((link) => {
   link.addEventListener("click", () => {
     const targetSection = link.dataset.section;
-
-    sidebarLinks.forEach((item) => {
-      item.classList.remove("active");
-    });
-
-    link.classList.add("active");
-
-    dashboardSections.forEach((section) => {
-      section.classList.remove("active-section");
-    });
-
-    const selectedSection = document.getElementById(targetSection);
-
-    if (selectedSection) {
-      selectedSection.classList.add("active-section");
-    }
+    showDashboardSection(targetSection);
   });
 });
-
 
 overviewActionButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const targetSection = button.dataset.goSection;
-
-    sidebarLinks.forEach((item) => {
-      item.classList.remove("active");
-    });
-
-    const targetSidebarButton = document.querySelector(
-      `.sidebar-link[data-section="${targetSection}"]`
-    );
-
-    if (targetSidebarButton) {
-      targetSidebarButton.classList.add("active");
-    }
-
-    dashboardSections.forEach((section) => {
-      section.classList.remove("active-section");
-    });
-
-    const selectedSection = document.getElementById(targetSection);
-
-    if (selectedSection) {
-      selectedSection.classList.add("active-section");
-    }
+    showDashboardSection(targetSection);
   });
 });
 
 // =============================
-// 5. Logout
+// 6. Logout
 // =============================
 
 if (logoutBtn) {
@@ -372,9 +401,8 @@ if (logoutBtn) {
   });
 }
 
-
 // =============================
-// 6. Profile UI Helpers
+// 7. Profile UI Helpers
 // =============================
 
 const showProfileView = () => {
@@ -425,7 +453,15 @@ const updateProfileView = (profile) => {
 };
 
 const fillProfileForm = (profile) => {
-  if (!profile) return;
+  if (!profile) {
+    if (fullNameInput) fullNameInput.value = "";
+    if (nationalityInput) nationalityInput.value = "";
+    if (currentCountryInput) currentCountryInput.value = "";
+    if (targetUniversityInput) targetUniversityInput.value = "";
+    if (targetProgramInput) targetProgramInput.value = "";
+    if (studyLevelInput) studyLevelInput.value = "";
+    return;
+  }
 
   if (fullNameInput) fullNameInput.value = profile.fullName || "";
   if (nationalityInput) nationalityInput.value = profile.nationality || "";
@@ -435,9 +471,8 @@ const fillProfileForm = (profile) => {
   if (studyLevelInput) studyLevelInput.value = profile.studyLevel || "";
 };
 
-
 // =============================
-// 7. Load Profile From Backend
+// 8. Load Profile From Backend
 // =============================
 
 const loadProfile = async () => {
@@ -460,15 +495,13 @@ const loadProfile = async () => {
     fillProfileForm(currentProfile);
     showProfileView();
     updateOverview();
-
   } catch (error) {
     console.log("Cannot connect to server");
   }
 };
 
-
 // =============================
-// 8. Save Profile To Backend
+// 9. Save Profile To Backend
 // =============================
 
 const saveProfile = async (event) => {
@@ -505,15 +538,13 @@ const saveProfile = async (event) => {
     updateOverview();
 
     alert("Profile saved successfully!");
-
   } catch (error) {
     alert("Cannot connect to server");
   }
 };
 
-
 // =============================
-// 9. Profile Buttons
+// 10. Profile Buttons
 // =============================
 
 if (editProfileBtn) {
@@ -535,7 +566,7 @@ if (profileForm) {
 }
 
 // =============================
-// 10. Checklist Helpers
+// 11. Checklist Helpers
 // =============================
 
 const fillChecklistForm = (checklist) => {
@@ -560,22 +591,9 @@ const showChecklistMessage = (text, type) => {
   checklistMessage.className = `message ${type}`;
 };
 
-const getChecklistInputs = () => {
-  return [
-    admissionLetterInput,
-    passportInput,
-    financialProofInput,
-    healthInsuranceInput,
-    accommodationProofInput,
-    passportPhotoInput,
-    applicationFormInput
-  ];
-};
-
 const updateChecklistUI = () => {
   const inputs = getChecklistInputs();
   const total = inputs.length;
-
   const completed = inputs.filter((input) => input && input.checked).length;
 
   if (checklistProgressText) {
@@ -608,9 +626,8 @@ const updateChecklistUI = () => {
   updateOverview();
 };
 
-
 // =============================
-// 11. Checklist Accordion
+// 12. Checklist Accordion
 // =============================
 
 checklistItems.forEach((item) => {
@@ -635,7 +652,7 @@ checklistItems.forEach((item) => {
 });
 
 // =============================
-// 12. Load Checklist From Backend
+// 13. Load Checklist From Backend
 // =============================
 
 const loadChecklist = async () => {
@@ -653,15 +670,13 @@ const loadChecklist = async () => {
     }
 
     fillChecklistForm(data);
-
   } catch (error) {
     console.log("Cannot connect to server");
   }
 };
 
-
 // =============================
-// 13. Save Checklist To Backend
+// 14. Save Checklist To Backend
 // =============================
 
 const saveChecklist = async (event) => {
@@ -693,7 +708,6 @@ const saveChecklist = async (event) => {
 
     fillChecklistForm(data.checklist);
     showChecklistMessage("Checklist saved successfully!", "success");
-
   } catch (error) {
     showChecklistMessage("Cannot connect to server", "error");
   }
@@ -704,8 +718,203 @@ if (checklistForm) {
 }
 
 // =============================
-// 14. Initial Load
+// 15. Load Session Requests
+// =============================
+
+const loadSessionRequests = async () => {
+  try {
+    const response = await fetch(`${API_URL}/session-request`, {
+      method: "GET",
+      headers: getAuthHeaders()
+    });
+
+    const sessionRequests = await response.json();
+
+    if (!response.ok) {
+      return;
+    }
+
+    if (sessionRequests.length === 0) {
+      hasSessionRequest = false;
+      latestSessionRequestId = null;
+
+      if (sessionCurrentStatus) {
+        sessionCurrentStatus.textContent = "No request submitted yet";
+        sessionCurrentStatus.style.color = "#991b1b";
+      }
+
+      if (sessionRequestedDate) {
+        sessionRequestedDate.textContent = "Not available";
+      }
+
+      if (sessionRequestedTime) {
+        sessionRequestedTime.textContent = "Not available";
+      }
+
+      if (sessionCreatedAt) {
+        sessionCreatedAt.textContent = "Not available";
+      }
+
+      if (deleteSessionRequestBtn) {
+        deleteSessionRequestBtn.classList.add("hidden");
+      }
+
+      updateOverview();
+      return;
+    }
+
+    hasSessionRequest = true;
+
+    const latestRequest = sessionRequests[sessionRequests.length - 1];
+    latestSessionRequestId = latestRequest.id;
+
+    if (sessionCurrentStatus) {
+      sessionCurrentStatus.textContent = `Latest request: ${latestRequest.status}`;
+      sessionCurrentStatus.style.color =
+        latestRequest.status === "confirmed" ? "#0f766e" : "#b45309";
+    }
+
+    if (sessionRequestedDate) {
+      sessionRequestedDate.textContent = latestRequest.preferredDate;
+    }
+
+    if (sessionRequestedTime) {
+      sessionRequestedTime.textContent = latestRequest.preferredTime;
+    }
+
+    if (sessionCreatedAt) {
+      const createdDate = new Date(latestRequest.createdAt);
+      sessionCreatedAt.textContent = createdDate.toLocaleString();
+    }
+
+    if (deleteSessionRequestBtn) {
+      deleteSessionRequestBtn.classList.remove("hidden");
+    }
+
+    updateOverview();
+  } catch (error) {
+    console.log("Could not load session requests");
+  }
+};
+
+
+// =============================
+// 16. Save Session Request
+// =============================
+
+const saveSessionRequest = async (event) => {
+  event.preventDefault();
+
+  const sessionData = {
+    topic: sessionTopicInput.value,
+    preferredDate: preferredDateInput.value,
+    preferredTime: preferredTimeInput.value,
+    message: sessionMessageInput.value
+  };
+
+  if (sessionRequestMessage) {
+    sessionRequestMessage.textContent = "Submitting request...";
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/session-request`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(sessionData)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      if (sessionRequestMessage) {
+        sessionRequestMessage.textContent =
+          data.message || "Could not submit request.";
+      }
+      return;
+    }
+
+    if (sessionRequestMessage) {
+      sessionRequestMessage.textContent =
+        "Session request submitted successfully.";
+    }
+
+    if (sessionCurrentStatus) {
+      sessionCurrentStatus.textContent = "Latest request: pending";
+      sessionCurrentStatus.style.color = "#0f766e";
+    }
+
+    hasSessionRequest = true;
+    updateOverview();
+
+    sessionRequestForm.reset();
+
+    loadSessionRequests();
+  } catch (error) {
+    if (sessionRequestMessage) {
+      sessionRequestMessage.textContent = "Could not connect to the server.";
+    }
+  }
+};
+
+
+const deleteSessionRequest = async () => {
+  if (!latestSessionRequestId) {
+    return;
+  }
+
+  const confirmDelete = confirm("Are you sure you want to cancel this session request?");
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `${API_URL}/session-request/${latestSessionRequestId}`,
+      {
+        method: "DELETE",
+        headers: getAuthHeaders()
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      if (sessionRequestMessage) {
+        sessionRequestMessage.textContent =
+          data.message || "Could not delete session request.";
+      }
+      return;
+    }
+
+    hasSessionRequest = false;
+    latestSessionRequestId = null;
+
+    if (sessionRequestMessage) {
+      sessionRequestMessage.textContent = "Session request cancelled successfully.";
+    }
+
+    loadSessionRequests();
+    updateOverview();
+  } catch (error) {
+    if (sessionRequestMessage) {
+      sessionRequestMessage.textContent = "Could not connect to the server.";
+    }
+  }
+};
+
+if (sessionRequestForm) {
+  sessionRequestForm.addEventListener("submit", saveSessionRequest);
+}
+if (deleteSessionRequestBtn) {
+  deleteSessionRequestBtn.addEventListener("click", deleteSessionRequest);
+}
+
+// =============================
+// 17. Initial Load
 // =============================
 
 loadProfile();
 loadChecklist();
+loadSessionRequests();
+updateOverview();
