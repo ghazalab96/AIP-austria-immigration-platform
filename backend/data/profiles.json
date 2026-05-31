@@ -1,0 +1,24 @@
+[
+  {
+    "userId": 1778488208834,
+    "fullName": "Ghazal Arbabzadeh",
+    "nationality": "Iranian",
+    "currentCountry": "Austria",
+    "targetUniversity": "FH Campus Wien",
+    "targetProgram": "Data Science",
+    "studyLevel": "Master",
+    "createdAt": "2026-05-31T08:30:35.555Z",
+    "updatedAt": null
+  },
+  {
+    "userId": 1778499015175,
+    "fullName": "",
+    "nationality": "test",
+    "currentCountry": "test",
+    "targetUniversity": "test",
+    "targetProgram": "test",
+    "studyLevel": "Master",
+    "createdAt": "2026-05-31T09:13:46.158Z",
+    "updatedAt": "2026-05-31T10:54:00.349Z"
+  }
+]

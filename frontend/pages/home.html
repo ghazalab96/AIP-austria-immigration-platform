@@ -16,10 +16,22 @@
 
       <div class="brand-text">
         <h1>Austria Immigration Platform</h1>
-        <p>Your Global Education Partner</p>
+        <p>YourEducation Partner</p>
       </div>
 
-      <a href="/pages/login.html" class="login-btn">Login / Sign up</a>
+      <div class="home-auth-area" id="homeAuthArea">
+        <a href="/pages/login.html" class="login-btn" id="homeLoginBtn">Login / Sign up</a>
+
+        <div class="home-user-menu hidden" id="homeUserMenu">
+          <a href="/pages/dashboard.html" class="home-user-name" id="homeUserName">
+            Profile
+          </a>
+
+          <button class="home-logout-btn" id="homeLogoutBtn">
+            Logout
+          </button>
+        </div>
+      </div>
 
       <button class="menu-btn" id="menuBtn">☰</button>
     </div>
@@ -36,16 +48,25 @@
   <main id="main-content">
     <section class="hero">
       <div class="hero-overlay">
-        <div class="hero-content">
+        <div class="hero-content hero-content-center">
           <h2>Your Path to Studying Abroad Starts Here</h2>
           <div class="accent-line"></div>
-          <p>
-            We simplify your journey to international education with expert guidance
-            and end-to-end support.
-          </p>
+
+          <div class="university-search-area">
+            <div class="university-search-form">
+              <input 
+                type="text" 
+                id="universitySearchInput" 
+                placeholder="Search university name in Austria..."
+                autocomplete="off"
+              />
+            </div>
+
+            <div id="universityResults" class="university-results"></div>
+          </div>
         </div>
       </div>
-    </section>
+      </section>
 
     <section class="services">
       <div class="service-card">

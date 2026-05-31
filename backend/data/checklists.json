@@ -1,0 +1,14 @@
+[
+  {
+    "userId": 1778499015175,
+    "admissionLetter": false,
+    "passport": true,
+    "financialProof": true,
+    "healthInsurance": true,
+    "accommodationProof": true,
+    "passportPhoto": true,
+    "applicationForm": true,
+    "createdAt": "2026-05-31T09:44:26.811Z",
+    "updatedAt": "2026-05-31T10:39:25.915Z"
+  }
+]

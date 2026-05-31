@@ -496,3 +496,215 @@ body {
     gap: 15px;
   }
 }
+
+.home-auth-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-user-name {
+  color: #07326b;
+  font-weight: bold;
+  text-decoration: none;
+  background: #e0f2fe;
+  padding: 10px 14px;
+  border-radius: 999px;
+}
+
+.home-user-name:hover {
+  background: #bae6fd;
+}
+
+.home-logout-btn {
+  border: none;
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.home-logout-btn:hover {
+  background: #fecaca;
+}
+
+.hidden {
+  display: none;
+}
+
+.hero-content-center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.hero-content-center .accent-line {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.university-search-area {
+  position: relative;
+  max-width: 620px;
+  width: 100%;
+  margin: 28px auto 0;
+}
+
+.university-search-form {
+  width: 100%;
+  display: flex;
+  background: white;
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.25);
+}
+
+.university-search-form input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 15px 20px;
+  border-radius: 999px;
+  font-size: 15px;
+}
+
+
+.university-results {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+
+  max-height: 280px;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+
+  background: rgba(31, 41, 55, 0.30);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
+}
+
+.university-results:empty {
+  display: none;
+}
+
+.university-result-card {
+  display: block;
+  background: white;
+  color: #0f172a;
+  border-radius: 16px;
+  padding: 18px 20px;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.university-result-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.university-result-link:hover {
+  transform: translateY(-2px);
+  border-color: #14b8a6;
+}
+
+.university-result-card h3 {
+  margin: 0 0 8px;
+  color: #07326b;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.university-result-card p {
+  margin: 0;
+  color: #0f766e;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+@media (max-width: 650px) {
+  .university-search-form {
+    max-width: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 6px;
+    border-radius: 18px;
+    padding: 6px;
+  }
+
+  .university-search-form input {
+    min-width: 0;
+    width: 100%;
+    border-radius: 14px;
+    padding: 13px 12px;
+    font-size: 14px;
+  }
+
+  .university-search-form button {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border-radius: 14px;
+    font-size: 0;
+    position: relative;
+  }
+
+  .university-search-form button::after {
+    content: "⏎";
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 650px) {
+  .university-search-area {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .university-search-form {
+    border-radius: 18px;
+    padding: 6px;
+  }
+
+  .university-search-form input {
+    border-radius: 14px;
+    padding: 13px 12px;
+    font-size: 14px;
+  }
+
+  .university-results {
+    max-height: 240px;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .university-result-card {
+    padding: 14px;
+  }
+
+  .university-result-card h3 {
+    font-size: 15px;
+  }
+
+  .university-result-card p {
+    font-size: 14px;
+  }
+}

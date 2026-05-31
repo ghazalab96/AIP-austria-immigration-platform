@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Visa Dashboard - AIP</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+</head>
+<body>
+
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <a href="/" class="sidebar-brand sidebar-brand-link">
+        <img src="/assets/logo.png" alt="AIP Logo" class="sidebar-logo" />
+        <div>
+          <h2>AIP</h2>
+          <p>Study in Austria</p>
+        </div>
+      </a>
+
+      <nav class="sidebar-menu">
+        <button class="sidebar-link active" data-section="overview">Overview</button>
+        <button class="sidebar-link" data-section="profile">Profile</button>
+        <button class="sidebar-link" data-section="checklist">Checklist</button>
+        <button class="sidebar-link" data-section="application">Session Request</button>
+      </nav>
+
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-content">
+
+    <!-- OVERVIEW -->
+    <section class="dashboard-section active-section" id="overview">
+
+      <div class="overview-welcome-card">
+        <div>
+          <span class="overview-label">Student Visa Journey</span>
+          <h3 id="overviewGreeting">Welcome</h3>
+          <p id="overviewNextStep">
+            Complete your profile and checklist before requesting an online session.
+          </p>
+        </div>
+
+        <div class="overview-progress-box-large">
+          <strong id="overviewProgressPercent">0%</strong>
+          <span>overall progress</span>
+        </div>
+      </div>
+
+  <div class="overview-summary-grid">
+
+    <!-- PROFILE SUMMARY -->
+    <div class="overview-window" id="profileOverviewCard">
+      <div class="overview-window-header">
+        <span class="overview-card-label">Student Info</span>
+        <span id="profileOverviewStatus" class="overview-status pending">Incomplete</span>
+      </div>
+
+      <h3>Profile Summary</h3>
+      <p id="profileOverviewText">Complete your student profile before continuing.</p>
+
+      <div class="overview-details-list">
+        <div>
+          <span>Full Name</span>
+          <strong id="overviewProfileName">Not provided</strong>
+        </div>
+
+        <div>
+          <span>University</span>
+          <strong id="overviewProfileUniversity">Not provided</strong>
+        </div>
+
+        <div>
+          <span>Study Level</span>
+          <strong id="overviewProfileStudyLevel">Not provided</strong>
+        </div>
+      </div>
+
+      <button class="overview-action-btn" data-go-section="profile">
+        Edit Profile
+      </button>
+    </div>
+
+    <!-- CHECKLIST SUMMARY -->
+    <div class="overview-window" id="checklistOverviewCard">
+      <div class="overview-window-header">
+        <span class="overview-card-label">Visa Requirements</span>
+        <span id="checklistOverviewStatus" class="overview-status pending">Pending</span>
+      </div>
+
+      <h3>Checklist Progress</h3>
+      <p id="checklistOverviewText">0 of 7 completed</p>
+
+      <div class="overview-progress-line">
+        <div id="overviewChecklistProgressFill" class="overview-progress-fill"></div>
+      </div>
+
+      <div class="overview-checklist-mini">
+        <p class="mini-title">Missing items</p>
+        <ul id="overviewMissingChecklist">
+          <li>No checklist data loaded yet.</li>
+        </ul>
+      </div>
+
+      <button class="overview-action-btn" data-go-section="checklist">
+        Go to Checklist
+      </button>
+    </div>
+
+    <!-- SESSION REQUEST SUMMARY -->
+    <div class="overview-window" id="sessionOverviewCard">
+      <div class="overview-window-header">
+        <span class="overview-card-label">Mentorship</span>
+        <span id="sessionOverviewStatus" class="overview-status pending">Not Requested</span>
+      </div>
+
+      <h3>Online Session Request</h3>
+      <p id="sessionOverviewText">
+        Request an online consultation after completing your profile and checklist.
+      </p>
+
+      <div class="overview-details-list">
+        <div>
+          <span>Status</span>
+          <strong>Not started</strong>
+        </div>
+
+        <div>
+          <span>Purpose</span>
+          <strong>Student visa guidance</strong>
+        </div>
+      </div>
+
+      <button class="overview-action-btn" data-go-section="session-request">
+        Request Session
+      </button>
+    </div>
+
+    <!-- NEXT STEP SUMMARY -->
+    <div class="overview-window next-step-window">
+      <div class="overview-window-header">
+        <span class="overview-card-label">Guidance</span>
+        <span class="overview-status info">Next Step</span>
+      </div>
+
+      <h3>Recommended Action</h3>
+      <p id="overviewRecommendedAction">
+        Start by completing your student profile.
+      </p>
+
+      <div class="next-step-note">
+        Your dashboard will guide you step by step through the preparation process.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+     
+      <!-- PROFILE -->
+<section class="dashboard-section" id="profile">
+  <div class="page-title">
+    <h2>My Profile</h2>
+    <p>Your personal study immigration information.</p>
+  </div>
+
+  <!-- PROFILE VIEW MODE -->
+  <div class="panel-card" id="profileView">
+    <div class="profile-header">
+      <div>
+        <h3>Student Information</h3>
+        <p>These details are used for your student visa process.</p>
+      </div>
+
+      <button id="editProfileBtn" class="secondary-btn">Edit Profile</button>
+    </div>
+
+    <div class="profile-details">
+      <div class="profile-row">
+        <span>Full Name</span>
+        <strong id="displayFullName">Not provided</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Nationality</span>
+        <strong id="displayNationality">Not provided</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Current Country</span>
+        <strong id="displayCurrentCountry">Not provided</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Target University</span>
+        <strong id="displayTargetUniversity">Not provided</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Target Program</span>
+        <strong id="displayTargetProgram">Not provided</strong>
+      </div>
+
+      <div class="profile-row">
+        <span>Study Level</span>
+        <strong id="displayStudyLevel">Not provided</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFILE EDIT MODE -->
+  <div class="panel-card hidden" id="profileEdit">
+    <div class="profile-header">
+      <div>
+        <h3>Edit Profile</h3>
+        <p>Update your student profile information.</p>
+      </div>
+
+      <button id="cancelEditProfileBtn" class="secondary-btn" type="button">Cancel</button>
+    </div>
+
+    <form id="profileForm" class="form-grid">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="fullName" placeholder="Your full name" />
+      </div>
+
+      <div class="form-group">
+        <label>Nationality</label>
+        <input type="text" id="nationality" placeholder="Your nationality" />
+      </div>
+
+      <div class="form-group">
+        <label>Current Country</label>
+        <input type="text" id="currentCountry" placeholder="Where do you live now?" />
+      </div>
+
+      <div class="form-group">
+        <label>Target University</label>
+        <input type="text" id="targetUniversity" placeholder="University name" />
+      </div>
+
+      <div class="form-group">
+        <label>Target Program</label>
+        <input type="text" id="targetProgram" placeholder="Program name" />
+      </div>
+
+      <div class="form-group">
+        <label>Study Level</label>
+        <select id="studyLevel">
+          <option value="">Select level</option>
+          <option value="Bachelor">Bachelor</option>
+          <option value="Master">Master</option>
+          <option value="PhD">PhD</option>
+        </select>
+      </div>
+
+      <button type="submit" class="primary-btn">Save Profile</button>
+    </form>
+  </div>
+</section>
+
+     
+<!-- CHECKLIST -->
+<section class="dashboard-section" id="checklist">
+  <div class="page-title checklist-title-row">
+    <div>
+      <h2>Student Visa Checklist</h2>
+      <p>Track and complete the required steps for your Austrian student visa.</p>
+    </div>
+
+    <div class="checklist-progress-box">
+      <span>Overall Progress</span>
+      <strong id="checklistProgressText">0 of 7 completed</strong>
+      <div class="progress-bar">
+        <div id="checklistProgressFill" class="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-card">
+    <form id="checklistForm">
+
+      <div class="accordion-checklist">
+
+        <div class="checklist-item" data-item="admissionLetter">
+          <div class="checklist-main">
+            <div class="checklist-left">
+              <input type="checkbox" id="admissionLetter" />
+              <button type="button" class="checklist-toggle">
+                Confirm Admission from University
+              </button>
+            </div>
+
+            <div class="checklist-right">
+              <span class="checklist-status pending">Pending</span>
+              <span class="arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="checklist-details">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. This section will later explain
+              what the admission letter is, why it is needed, and how the student can prepare it.
+            </p>
+          </div>
+        </div>
+
+        <div class="checklist-item" data-item="passport">
+          <div class="checklist-main">
+            <div class="checklist-left">
+              <input type="checkbox" id="passport" />
+              <button type="button" class="checklist-toggle">
+                Prepare Valid Passport
+              </button>
+            </div>
+
+            <div class="checklist-right">
+              <span class="checklist-status pending">Pending</span>
+              <span class="arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="checklist-details">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. This section will later explain
+              passport validity, required pages, and important document details.
+            </p>
+          </div>
+        </div>
+
+        <div class="checklist-item" data-item="financialProof">
+          <div class="checklist-main">
+            <div class="checklist-left">
+              <input type="checkbox" id="financialProof" />
+              <button type="button" class="checklist-toggle">
+                Prepare Financial Proof
+              </button>
+            </div>
+
+            <div class="checklist-right">
+              <span class="checklist-status pending">Pending</span>
+              <span class="arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="checklist-details">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. This section will later explain
+              proof of financial means and what documents may be accepted.
+            </p>
+          </div>
+        </div>
+
+        <div class="checklist-item" data-item="healthInsurance">
+          <div class="checklist-main">
+            <div class="checklist-left">
+              <input type="checkbox" id="healthInsurance" />
+              <button type="button" class="checklist-toggle">
+                Health Insurance Coverage
+              </button>
+            </div>
+
+            <div class="checklist-right">
+              <span class="checklist-status pending">Pending</span>
+              <span class="arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="checklist-details">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. This section will later explain
+              health insurance requirements for students in Austria.
+            </p>
+          </div>
+        </div>
+
+        <div class="checklist-item" data-item="accommodationProof">
+          <div class="checklist-main">
+            <div class="checklist-left">
+              <input type="checkbox" id="accommodationProof" />
+              <button type="button" class="checklist-toggle">
+                Prepare Accommodation Proof
+              </button>
+            </div>
+
+            <div class="checklist-right">
+              <span class="checklist-status pending">Pending</span>
+              <span class="arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="checklist-details">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. This section will later explain
+              dormitory confirmation, rental agreement, or other proof of accommodation.
+            </p>
+          </div>
+        </div>
+
+        <div class="checklist-item" data-item="passportPhoto">
+          <div class="checklist-main">
+            <div class="checklist-left">
+              <input type="checkbox" id="passportPhoto" />
+              <button type="button" class="checklist-toggle">
+                Prepare Passport Photo
+              </button>
+            </div>
+
+            <div class="checklist-right">
+              <span class="checklist-status pending">Pending</span>
+              <span class="arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="checklist-details">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. This section will later explain
+              photo size, background, and format requirements.
+            </p>
+          </div>
+        </div>
+
+        <div class="checklist-item" data-item="applicationForm">
+          <div class="checklist-main">
+            <div class="checklist-left">
+              <input type="checkbox" id="applicationForm" />
+              <button type="button" class="checklist-toggle">
+                Complete Visa Application Form
+              </button>
+            </div>
+
+            <div class="checklist-right">
+              <span class="checklist-status pending">Pending</span>
+              <span class="arrow">⌄</span>
+            </div>
+          </div>
+
+          <div class="checklist-details">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. This section will later explain
+              how to complete the official visa application form.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <button type="submit" class="primary-btn checklist-save-btn">
+        Save Checklist
+      </button>
+
+      <p id="checklistMessage" class="message"></p>
+    </form>
+  </div>
+</section>
+
+      <!-- SESSION REQUEST -->
+<section class="dashboard-section" id="session-request">
+  <div class="page-title">
+    <h2>Online Session Request</h2>
+    <p>Request an online session for your Austrian student visa preparation.</p>
+  </div>
+
+  <div class="panel-card">
+    <form id="sessionRequestForm">
+      <div class="form-group">
+        <label>Session Topic</label>
+        <select id="sessionTopic" required>
+          <option value="">Select topic</option>
+          <option value="Document review">Document review</option>
+          <option value="Student visa guidance">Student visa guidance</option>
+          <option value="University admission question">University admission question</option>
+          <option value="Financial proof question">Financial proof question</option>
+          <option value="General consultation">General consultation</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Date</label>
+        <input type="date" id="preferredDate" required />
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Time</label>
+        <input type="time" id="preferredTime" required />
+      </div>
+
+      <div class="form-group">
+        <label>Message</label>
+        <textarea 
+          id="sessionMessage" 
+          rows="4" 
+          placeholder="Write a short message about what you need help with."
+        ></textarea>
+      </div>
+
+      <button type="submit" class="primary-btn">Submit Session Request</button>
+
+      <p id="sessionRequestMessage" class="message"></p>
+    </form>
+  </div>
+</section>
+
+    </main>
+  </div>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
