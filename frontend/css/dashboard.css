@@ -670,12 +670,12 @@ body {
   background: linear-gradient(135deg, #07326b, #0f766e);
   color: white;
   border-radius: 24px;
-  padding: 32px;
+  padding: 14px;
   margin-bottom: 26px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
   box-shadow: 0 14px 35px rgba(15, 23, 42, 0.16);
 }
 
@@ -683,14 +683,14 @@ body {
   display: inline-block;
   background: rgba(255, 255, 255, 0.14);
   color: #ccfbf1;
-  padding: 7px 12px;
+  padding: 10px 12px;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 25px;
   font-weight: bold;
   margin-bottom: 14px;
 }
 
-.overview-welcome-card h3 {
+.overview-welcome-card h2 {
   margin: 0 0 10px;
   font-size: 30px;
 }
@@ -700,6 +700,10 @@ body {
   color: #dbeafe;
   line-height: 1.6;
   max-width: 680px;
+}
+
+.overview-welcome-card > div:first-child {
+  margin-left: 20px;
 }
 
 .overview-progress-box-large {
