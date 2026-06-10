@@ -92,3 +92,68 @@ exports.deleteSessionRequest = (req, res) => {
     message: "Session request deleted successfully"
   });
 };
+
+exports.getAllSessionRequestsForAdmin = (req, res) => {
+  const sessionRequests = getSessionRequests();
+
+  res.json(sessionRequests);
+};
+
+exports.updateSessionRequestStatus = (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  const allowedStatuses = ["pending", "confirmed", "rejected"];
+
+  if (!allowedStatuses.includes(status)) {
+    return res.status(400).json({
+      message: "Invalid status"
+    });
+  }
+
+  const sessionRequests = getSessionRequests();
+
+  const sessionRequest = sessionRequests.find(
+    (request) => request.id === Number(id)
+  );
+
+  if (!sessionRequest) {
+    return res.status(404).json({
+      message: "Session request not found"
+    });
+  }
+
+  sessionRequest.status = status;
+  sessionRequest.updatedAt = new Date().toISOString();
+
+  saveSessionRequests(sessionRequests);
+
+  res.json({
+    message: "Session request status updated successfully",
+    sessionRequest
+  });
+};
+
+exports.deleteSessionRequestForAdmin = (req, res) => {
+  const { id } = req.params;
+
+  const sessionRequests = getSessionRequests();
+
+  const requestIndex = sessionRequests.findIndex(
+    (request) => request.id === Number(id)
+  );
+
+  if (requestIndex === -1) {
+    return res.status(404).json({
+      message: "Session request not found"
+    });
+  }
+
+  sessionRequests.splice(requestIndex, 1);
+
+  saveSessionRequests(sessionRequests);
+
+  res.json({
+    message: "Session request deleted successfully"
+  });
+};

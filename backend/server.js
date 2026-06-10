@@ -12,6 +12,7 @@ const profileRoutes = require("./routes/profile.routes");
 const checklistRoutes = require("./routes/checklist.routes");
 const universityRoutes = require("./routes/university.routes");
 const sessionRoutes = require("./routes/session.routes");
+const holidayRoutes = require("./routes/holiday.routes");
 
 const app = express();
 
@@ -28,9 +29,13 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/checklist", checklistRoutes);
 app.use("/api/universities", universityRoutes);
 app.use("/api/session-request", sessionRoutes);
+app.use("/api/holidays", holidayRoutes);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/pages/home.html"));
+});
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/pages/admin.html"));
 });
 
 const PORT = 5050;

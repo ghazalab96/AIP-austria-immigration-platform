@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin Panel - AIP</title>
+
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+
+<body>
+  <!-- Admin Login Screen -->
+  <section id="adminLoginScreen" class="admin-login-screen hidden">
+    <div class="admin-login-card">
+      <img src="/assets/logo.png" alt="AIP Logo" class="admin-login-logo" />
+
+      <h1>Admin Access</h1>
+
+      <p>
+        Enter the admin key to access the session management panel.
+      </p>
+
+      <input
+        type="password"
+        id="adminLoginKeyInput"
+        placeholder="Admin key"
+      />
+
+      <button id="adminLoginBtn" class="primary-btn" type="button">
+        Enter Admin Panel
+      </button>
+
+      <p id="adminLoginMessage" class="message"></p>
+
+      <a href="/" class="admin-login-back">
+        Back to Home
+      </a>
+    </div>
+  </section>
+
+  <!-- Admin Panel -->
+  <div class="admin-layout hidden" id="adminPanel">
+    <aside class="admin-sidebar">
+      <a href="/" class="admin-brand">
+        <img src="/assets/logo.png" alt="AIP Logo" class="admin-logo" />
+
+        <div>
+          <h1>AIP Admin</h1>
+          <p>Session Management</p>
+        </div>
+      </a>
+
+      <nav class="admin-menu">
+        <button class="admin-menu-btn active" type="button">
+          Session Requests
+        </button>
+      </nav>
+
+      <a href="/pages/dashboard.html" class="back-link">
+        Back to Dashboard
+      </a>
+
+      <button id="adminLogoutBtn" class="admin-logout-btn" type="button">
+        Admin Logout
+      </button>
+    </aside>
+
+    <main class="admin-main">
+      <section class="admin-header">
+        <div>
+          <span class="admin-label">Admin Panel</span>
+
+          <h2>Online Session Requests</h2>
+
+          <p>
+            Review, confirm, reject or delete student online session requests.
+          </p>
+        </div>
+
+        <button id="refreshRequestsBtn" class="secondary-btn" type="button">
+          Refresh
+        </button>
+      </section>
+
+      <section class="requests-section">
+        <div class="requests-header">
+          <h3>All Requests</h3>
+          <p id="requestsCount">0 requests found</p>
+        </div>
+
+        <div id="requestsContainer" class="requests-container">
+          <div class="empty-state">
+            <h3>No data loaded yet</h3>
+            <p>Enter the admin key to load requests.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

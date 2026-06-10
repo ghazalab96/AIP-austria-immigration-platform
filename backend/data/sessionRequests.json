@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "id": 1781094660676,
+    "userId": 1778499015175,
+    "topic": "General consultation",
+    "preferredDate": "2026-12-25",
+    "preferredTime": "10:23",
+    "message": "I want a session.",
+    "status": "rejected",
+    "createdAt": "2026-06-10T12:31:00.676Z",
+    "updatedAt": "2026-06-10T13:27:01.119Z"
+  }
+]

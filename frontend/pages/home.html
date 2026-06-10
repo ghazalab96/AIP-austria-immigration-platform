@@ -3,60 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AIP - Austria Immigration Platform</title>
-  <link rel="stylesheet" href="../css/home.css" />
-</head>
-<body>
 
+  <title>AIP - Austria Immigration Platform</title>
+
+  <link rel="stylesheet" href="/css/home.css" />
+</head>
+
+<body>
   <header class="site-header">
     <div class="top-header">
-      <div class="logo-box">
-        <img src="../assets/logo.png" alt="AIP Logo" class="logo" />
-      </div>
+      <a href="/" class="brand-area">
+        <img src="/assets/logo.png" alt="AIP Logo" class="logo" />
 
-      <div class="brand-text">
-        <h1>Austria Immigration Platform</h1>
-        <p>Your Education Partner</p>
-      </div>
+        <div class="brand-text">
+          <h1>Austria Immigration Platform</h1>
+          <p>Student Immigration & Study Preparation</p>
+        </div>
+      </a>
+
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">
+        ☰
+      </button>
 
       <div class="home-auth-area" id="homeAuthArea">
-        <a href="/pages/login.html" class="login-btn" id="homeLoginBtn">Login / Sign up</a>
+        <a href="/pages/login.html" class="login-btn" id="homeLoginBtn">
+          Login / Sign up
+        </a>
 
         <div class="home-user-menu hidden" id="homeUserMenu">
           <a href="/pages/dashboard.html" class="home-user-name" id="homeUserName">
             Profile
           </a>
 
-          <button class="home-logout-btn" id="homeLogoutBtn">
+          <button class="home-logout-btn" id="homeLogoutBtn" type="button">
             Logout
           </button>
         </div>
       </div>
-
-      <button class="menu-btn" id="menuBtn">☰</button>
     </div>
 
     <nav class="navbar" id="navbar">
-      <a href="#" class="nav-link active" data-page="home">Home</a>
-      <a href="#" class="nav-link" data-page="universities">Universities</a>
-      <a href="#" class="nav-link" data-page="services">Our Services</a>
-      <a href="#" class="nav-link" data-page="faq">FAQ</a>
-      <a href="#" class="nav-link" data-page="contact">Contact</a>
+      <button class="home-tab-btn active" type="button" data-tab="home">
+        Home
+      </button>
+
+      <button class="home-tab-btn" type="button" data-tab="study">
+        Study in Austria
+      </button>
+
+      <button class="home-tab-btn" type="button" data-tab="visa">
+        Visa Preparation
+      </button>
+
+      <button class="home-tab-btn" type="button" data-tab="guidance">
+        Online Guidance
+      </button>
+
+      <button class="home-tab-btn" type="button" data-tab="faq">
+        FAQ
+      </button>
     </nav>
   </header>
 
   <main id="main-content">
-    <section class="hero">
-      <div class="hero-overlay">
-        <div class="hero-content hero-content-center">
-          <h2>Your Path to Studying Abroad Starts Here</h2>
-          <div class="accent-line"></div>
+    <!-- HOME TAB -->
+    <section class="page-panel active" id="tab-home">
+      <section class="hero">
+        <div class="hero-overlay">
+          <div class="hero-content">
+            <h2>Plan your student journey to Austria.</h2>
+
+            <p>
+              AIP helps international students organize their study and visa
+              preparation in Austria with a clearer workflow.
+            </p>
+
+            <a href="#university-search-section" class="hero-search-btn">
+              Find University
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="university-search-section" id="university-search-section">
+        <div class="university-search-box">
+          <div class="search-section-title">
+            <h2>Find University</h2>
+
+            <p>
+              Search Austrian universities by name and open their official websites.
+            </p>
+          </div>
 
           <div class="university-search-area">
             <div class="university-search-form">
-              <input 
-                type="text" 
-                id="universitySearchInput" 
+              <input
+                type="text"
+                id="universitySearchInput"
                 placeholder="Search university name in Austria..."
                 autocomplete="off"
               />
@@ -65,41 +108,194 @@
             <div id="universityResults" class="university-results"></div>
           </div>
         </div>
-      </div>
       </section>
+    </section>
 
-    <section class="services">
-      <div class="service-card">
-        <div class="icon-circle blue"></div>
-        <h3>Student Application</h3>
-        <p>Choose the right university and submit your application easily.</p>
-        <span class="card-line blue-line"></span>
-      </div>
+    <!-- STUDY TAB -->
+    <section class="page-panel" id="tab-study">
+      <section class="simple-page">
+        <div class="simple-page-header">
+          <h2>Study in Austria</h2>
 
-      <div class="service-card">
-        <div class="icon-circle green"></div>
-        <h3>Student Visa</h3>
-        <p>Expert visa guidance to help you apply with confidence.</p>
-        <span class="card-line green-line"></span>
-      </div>
+          <p>
+            Austria offers different types of higher education institutions,
+            including public universities, universities of applied sciences and
+            private institutions.
+          </p>
+        </div>
 
-      <div class="service-card">
-        <div class="icon-circle yellow"></div>
-        <h3>Dorm & Insurance</h3>
-        <p>Find safe accommodation and reliable insurance easily.</p>
-        <span class="card-line yellow-line"></span>
-      </div>
+        <div class="text-layout">
+          <div>
+            <h3>Find your study path</h3>
+            <p>
+              Students can use AIP to search Austrian universities and collect
+              basic study information before starting the visa preparation process.
+            </p>
+          </div>
+
+          <div>
+            <h3>Organize your information</h3>
+            <p>
+              Your dashboard helps you keep your study plan, university choice
+              and preparation status in one place.
+            </p>
+          </div>
+
+          <div>
+            <h3>Move from study planning to visa preparation</h3>
+            <p>
+              After choosing a study direction, AIP helps you continue with
+              document tracking and online guidance.
+            </p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- VISA TAB -->
+    <section class="page-panel" id="tab-visa">
+      <section class="simple-page">
+        <div class="simple-page-header">
+          <h2>Visa Preparation</h2>
+
+          <p>
+            Student residence permit preparation usually requires several important
+            documents. AIP helps students keep track of what is ready and what
+            still needs attention.
+          </p>
+        </div>
+
+        <div class="document-list">
+          <div>
+            <span>01</span>
+            <p>Passport</p>
+          </div>
+
+          <div>
+            <span>02</span>
+            <p>Admission Letter</p>
+          </div>
+
+          <div>
+            <span>03</span>
+            <p>Financial Proof</p>
+          </div>
+
+          <div>
+            <span>04</span>
+            <p>Health Insurance</p>
+          </div>
+
+          <div>
+            <span>05</span>
+            <p>Accommodation Proof</p>
+          </div>
+
+          <div>
+            <span>06</span>
+            <p>Passport Photo</p>
+          </div>
+
+          <div>
+            <span>07</span>
+            <p>Application Form</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- GUIDANCE TAB -->
+    <section class="page-panel" id="tab-guidance">
+      <section class="simple-page">
+        <div class="simple-page-header">
+          <h2>Online Guidance</h2>
+
+          <p>
+            Students can request an online guidance session from their dashboard.
+            An admin can review the request and update its status.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div>
+            <strong>Submit request</strong>
+            <p>Send your preferred date, time and topic.</p>
+          </div>
+
+          <div>
+            <strong>Admin review</strong>
+            <p>The request is checked from the admin panel.</p>
+          </div>
+
+          <div>
+            <strong>Status update</strong>
+            <p>The request can be pending, confirmed or rejected.</p>
+          </div>
+
+          <div>
+            <strong>Session details</strong>
+            <p>After confirmation, session details are sent by email.</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- FAQ TAB -->
+    <section class="page-panel" id="tab-faq">
+      <section class="simple-page">
+        <div class="simple-page-header">
+          <h2>FAQ</h2>
+
+          <p>
+            Common questions about using AIP for study and visa preparation.
+          </p>
+        </div>
+
+        <div class="faq-list">
+          <article>
+            <h3>Do I need an account?</h3>
+            <p>
+              Yes. You need an account to save your profile, checklist and
+              session requests.
+            </p>
+          </article>
+
+          <article>
+            <h3>Is AIP an official government platform?</h3>
+            <p>
+              No. AIP is a student preparation platform and does not replace
+              official Austrian immigration authorities.
+            </p>
+          </article>
+
+          <article>
+            <h3>Can I search Austrian universities?</h3>
+            <p>
+              Yes. University search is connected to an external university API.
+            </p>
+          </article>
+
+          <article>
+            <h3>Can I request an online session?</h3>
+            <p>
+              Yes. You can request a session from your dashboard and follow its
+              status.
+            </p>
+          </article>
+        </div>
+      </section>
     </section>
   </main>
 
   <footer class="footer">
     <div>
-      <a href="#">Contact</a>
-      <a href="#">FAQ</a>
+      <strong>AIP</strong>
+      <p>Austria Immigration Platform</p>
     </div>
+
     <p>© AIP 2026</p>
   </footer>
 
-  <script src="../js/home.js"></script>
+  <script src="/js/home.js"></script>
 </body>
 </html>

@@ -80,6 +80,9 @@ const sessionRequestForm = document.getElementById("sessionRequestForm");
 const sessionTopicInput = document.getElementById("sessionTopic");
 const preferredDateInput = document.getElementById("preferredDate");
 const preferredTimeInput = document.getElementById("preferredTime");
+const dateValidationMessage = document.getElementById("dateValidationMessage");
+const timeValidationMessage = document.getElementById("timeValidationMessage");
+const holidayWarning = document.getElementById("holidayWarning");
 const sessionMessageInput = document.getElementById("sessionMessage");
 const sessionRequestMessage = document.getElementById("sessionRequestMessage");
 const sessionCurrentStatus = document.getElementById("sessionCurrentStatus");
@@ -92,6 +95,8 @@ const deleteSessionRequestBtn = document.getElementById("deleteSessionRequestBtn
 let currentProfile = null;
 let hasSessionRequest = false;
 let latestSessionRequestId = null;
+let latestSessionStatus = null;
+let latestSessionRequest = null;
 
 // =============================
 // 1. Protect Dashboard
@@ -283,26 +288,58 @@ const updateOverview = () => {
   }
 
   // Session request card
-  setStatusStyle(
-    sessionOverviewStatus,
-    hasSessionRequest,
-    "Requested",
-    "Not Requested"
-  );
-
-  setCardStyle(sessionOverviewCard, hasSessionRequest);
-
-  if (sessionOverviewText) {
-    sessionOverviewText.textContent = hasSessionRequest
-      ? "Your online session request has been submitted and is currently pending."
-      : "Request an online consultation after completing your profile and checklist.";
+if (sessionOverviewStatus) {
+  sessionOverviewStatus.classList.remove("completed", "pending", "rejected");
+  if (!hasSessionRequest) {
+    sessionOverviewStatus.textContent = "Not Requested";
+    sessionOverviewStatus.classList.add("pending");
+  } else if (latestSessionStatus === "confirmed") {
+    sessionOverviewStatus.textContent = "Confirmed";
+    sessionOverviewStatus.classList.add("completed");
+  } else if (latestSessionStatus === "rejected") {
+    sessionOverviewStatus.textContent = "Rejected";
+    sessionOverviewStatus.classList.add("rejected");
+  } else {
+    sessionOverviewStatus.textContent = "Pending";
+    sessionOverviewStatus.classList.add("pending");
   }
+}
+
+if (sessionOverviewCard) {
+  sessionOverviewCard.classList.remove("completed", "pending", "rejected");
+
+  if (!hasSessionRequest) {
+    sessionOverviewCard.classList.add("pending");
+  } else if (latestSessionStatus === "confirmed") {
+    sessionOverviewCard.classList.add("completed");
+  } else if (latestSessionStatus === "rejected") {
+    sessionOverviewCard.classList.add("rejected");
+  } else {
+    sessionOverviewCard.classList.add("pending");
+  }
+}
+
+if (sessionOverviewText) {
+  if (!hasSessionRequest) {
+    sessionOverviewText.textContent =
+      "Request an online consultation after completing your profile and checklist.";
+  } else if (latestSessionStatus === "confirmed") {
+    sessionOverviewText.textContent =
+      "Your online session request has been confirmed.";
+  } else if (latestSessionStatus === "rejected") {
+    sessionOverviewText.textContent =
+      "Your online session request has been rejected. You can submit a new request.";
+  } else {
+    sessionOverviewText.textContent =
+      "Your online session request has been submitted and is currently pending.";
+  }
+}
 
   // Overall progress
   const overallSteps = [
     profileComplete,
     checklistComplete,
-    hasSessionRequest
+    hasSessionRequest && latestSessionStatus === "confirmed"
   ];
 
   const completedSteps = overallSteps.filter(Boolean).length;
@@ -314,34 +351,46 @@ const updateOverview = () => {
 
   // Next step text
   if (overviewNextStep) {
-    if (!profileComplete) {
+    if (latestSessionStatus === "confirmed" && latestSessionRequest) {
+      overviewNextStep.textContent =
+        `Your online session is confirmed for ${latestSessionRequest.preferredDate} at ${latestSessionRequest.preferredTime}.`;
+    } else if (latestSessionStatus === "rejected") {
+      overviewNextStep.textContent =
+        "Your online session request was rejected. You can submit a new request.";
+    } else if (latestSessionStatus === "pending") {
+      overviewNextStep.textContent =
+        "Your online session request has been submitted and is waiting for confirmation.";
+    } else if (!profileComplete) {
       overviewNextStep.textContent =
         "Complete your profile to continue your student visa preparation.";
     } else if (!checklistComplete) {
       overviewNextStep.textContent =
         "Complete your checklist before requesting an online session.";
-    } else if (!hasSessionRequest) {
-      overviewNextStep.textContent =
-        "You are ready to request an online session.";
     } else {
       overviewNextStep.textContent =
-        "Your online session request has been submitted.";
+        "You are ready to request an online session.";
     }
   }
 
   if (overviewRecommendedAction) {
-    if (!profileComplete) {
+    if (latestSessionStatus === "confirmed" && latestSessionRequest) {
+      overviewRecommendedAction.textContent =
+        `Your session has been confirmed for ${latestSessionRequest.preferredDate} at ${latestSessionRequest.preferredTime}. The session details have been sent to your email. See you soon :)`;
+    } else if (latestSessionStatus === "rejected") {
+      overviewRecommendedAction.textContent =
+        "Your session request was rejected. Please choose another date or time and submit a new request.";
+    } else if (latestSessionStatus === "pending") {
+      overviewRecommendedAction.textContent =
+        "Your session request is submitted. Please wait until an admin confirms it.";
+    } else if (!profileComplete) {
       overviewRecommendedAction.textContent =
         "Start by completing your student profile. This helps us understand your study plan and immigration situation.";
     } else if (!checklistComplete) {
       overviewRecommendedAction.textContent =
         "Continue with your student visa checklist and mark the documents you already have.";
-    } else if (!hasSessionRequest) {
-      overviewRecommendedAction.textContent =
-        "Your profile and checklist are ready. You can now submit an online session request.";
     } else {
       overviewRecommendedAction.textContent =
-        "Your session request is submitted. Please wait for the next update.";
+        "Your profile and checklist are ready. You can now submit an online session request.";
     }
   }
 };
@@ -737,6 +786,8 @@ const loadSessionRequests = async () => {
     if (sessionRequests.length === 0) {
       hasSessionRequest = false;
       latestSessionRequestId = null;
+      latestSessionStatus = null;
+      latestSessionRequest = null;
 
       if (sessionCurrentStatus) {
         sessionCurrentStatus.textContent = "No request submitted yet";
@@ -766,7 +817,9 @@ const loadSessionRequests = async () => {
     hasSessionRequest = true;
 
     const latestRequest = sessionRequests[sessionRequests.length - 1];
+    latestSessionRequest = latestRequest;
     latestSessionRequestId = latestRequest.id;
+    latestSessionStatus = latestRequest.status;
 
     if (sessionCurrentStatus) {
       sessionCurrentStatus.textContent = `Latest request: ${latestRequest.status}`;
@@ -799,11 +852,154 @@ const loadSessionRequests = async () => {
 
 
 // =============================
+//date and time validation
+// =============================
+
+const getTodayDateString = () => {
+  const today = new Date();
+
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+const setMinimumSessionDate = () => {
+  if (!preferredDateInput) return;
+
+  preferredDateInput.min = getTodayDateString();
+};
+
+const showValidationMessage = (element, message) => {
+  if (!element) return;
+
+  element.textContent = message;
+  element.classList.remove("hidden");
+};
+
+const hideValidationMessage = (element) => {
+  if (!element) return;
+
+  element.textContent = "";
+  element.classList.add("hidden");
+};
+
+const validateSessionDate = () => {
+  if (!preferredDateInput) return true;
+
+  const selectedDate = preferredDateInput.value;
+  const today = getTodayDateString();
+
+  if (!selectedDate) {
+    showValidationMessage(dateValidationMessage, "Please select a date.");
+    return false;
+  }
+
+  if (selectedDate < today) {
+    showValidationMessage(
+      dateValidationMessage,
+      "The selected date cannot be before today."
+    );
+    return false;
+  }
+
+  hideValidationMessage(dateValidationMessage);
+  return true;
+};
+
+const validateSessionTime = () => {
+  if (!preferredTimeInput) return true;
+
+  const selectedTime = preferredTimeInput.value;
+
+  if (!selectedTime) {
+    showValidationMessage(timeValidationMessage, "Please select a time.");
+    return false;
+  }
+
+  if (selectedTime < "07:00" || selectedTime > "22:00") {
+    showValidationMessage(
+      timeValidationMessage,
+      "Please choose a time between 07:00 and 22:00."
+    );
+    return false;
+  }
+
+  hideValidationMessage(timeValidationMessage);
+  return true;
+};
+
+const validateSessionForm = () => {
+  const isDateValid = validateSessionDate();
+  const isTimeValid = validateSessionTime();
+
+  return isDateValid && isTimeValid;
+};
+
+
+const checkSelectedHoliday = async () => {
+  if (!preferredDateInput || !holidayWarning) {
+    return;
+  }
+
+  const selectedDate = preferredDateInput.value;
+
+  if (!selectedDate) {
+    holidayWarning.classList.add("hidden");
+    holidayWarning.textContent = "";
+    return;
+  }
+
+  const isDateValid = validateSessionDate();
+
+  if (!isDateValid) {
+    holidayWarning.classList.add("hidden");
+    holidayWarning.textContent = "";
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `${API_URL}/holidays/check?date=${encodeURIComponent(selectedDate)}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      holidayWarning.classList.remove("hidden");
+      holidayWarning.textContent =
+        data.message || "Could not check Austrian public holidays.";
+      return;
+    }
+
+    if (data.isHoliday) {
+      holidayWarning.classList.remove("hidden");
+      holidayWarning.textContent =
+        `This date is a public holiday in Austria: ${data.localName || data.holidayName}. You may want to choose another date.`;
+    } else {
+      holidayWarning.classList.add("hidden");
+      holidayWarning.textContent = "";
+    }
+  } catch (error) {
+    holidayWarning.classList.remove("hidden");
+    holidayWarning.textContent =
+      "Could not connect to the holiday service.";
+  }
+};
+
+// =============================
 // 16. Save Session Request
 // =============================
 
 const saveSessionRequest = async (event) => {
   event.preventDefault();
+
+  const isFormValid = validateSessionForm();
+
+  if (!isFormValid) {
+    return;
+  }  
 
   const sessionData = {
     topic: sessionTopicInput.value,
@@ -844,9 +1040,16 @@ const saveSessionRequest = async (event) => {
     }
 
     hasSessionRequest = true;
+    latestSessionStatus = "pending";
+    latestSessionRequest = data.sessionRequest;
     updateOverview();
 
     sessionRequestForm.reset();
+
+    if (holidayWarning) {
+      holidayWarning.classList.add("hidden");
+      holidayWarning.textContent = "";
+    }
 
     loadSessionRequests();
   } catch (error) {
@@ -909,10 +1112,22 @@ if (sessionRequestForm) {
 if (deleteSessionRequestBtn) {
   deleteSessionRequestBtn.addEventListener("click", deleteSessionRequest);
 }
+if (preferredDateInput) {
+  preferredDateInput.addEventListener("change", () => {
+    validateSessionDate();
+    checkSelectedHoliday();
+  });
+}
+
+if (preferredTimeInput) {
+  preferredTimeInput.addEventListener("change", validateSessionTime);
+}
 
 // =============================
 // 17. Initial Load
 // =============================
+
+setMinimumSessionDate();
 
 loadProfile();
 loadChecklist();

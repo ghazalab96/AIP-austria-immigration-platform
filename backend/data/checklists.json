@@ -5,10 +5,10 @@
     "passport": true,
     "financialProof": true,
     "healthInsurance": true,
-    "accommodationProof": true,
+    "accommodationProof": false,
     "passportPhoto": true,
     "applicationForm": true,
     "createdAt": "2026-05-31T09:44:26.811Z",
-    "updatedAt": "2026-06-07T18:34:28.936Z"
+    "updatedAt": "2026-06-10T13:26:05.261Z"
   }
 ]
