@@ -108,6 +108,28 @@ homeTabButtons.forEach((button) => {
   });
 });
 
+// Hero Find University button
+const heroSearchBtn = document.querySelector(".hero-search-btn");
+
+if (heroSearchBtn) {
+  heroSearchBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    switchHomeTab("home");
+
+    const universitySearchSection = document.getElementById(
+      "university-search-section"
+    );
+
+    if (universitySearchSection) {
+      universitySearchSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  });
+}
+
 // University search
 const setupUniversitySearch = () => {
   const universitySearchInput = document.getElementById("universitySearchInput");
