@@ -29,13 +29,20 @@ a {
 }
 
 .top-header {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 18px 42px 16px;
+  background-color: rgba(34, 123, 168, 0.3);
+  width: 100%;
+  margin: 0 ;
+  padding: 18px 70px 16px;
   display: grid;
-  grid-template-columns: 150px 1fr auto auto;
+  grid-template-columns: 220px 1fr 220px auto;
   align-items: center;
-  gap: 24px;
+  gap: 10px;
+  background: linear-gradient(
+  to bottom,
+  rgba(34, 123, 168, 0.3),
+  rgba(34, 123, 168, 0.3) 40%,
+  #ffffff 100%
+);
 }
 
 .brand-area {
@@ -45,13 +52,14 @@ a {
 }
 
 .logo {
-  width: 105px;
-  height: 105px;
+  width: 145px;
+  height: 145px;
   object-fit: contain;
 }
 
 .brand-text {
   text-align: center;
+  justify-self: center;
 }
 
 .brand-text h1 {
@@ -72,6 +80,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  justify-self: end;
 }
 
 .login-btn {
@@ -85,6 +94,7 @@ a {
   padding: 12px 18px;
   border-radius: 8px;
   font-weight: 700;
+  font-size: 20px;
 }
 
 .login-btn:hover {
@@ -99,16 +109,18 @@ a {
 }
 
 .home-user-name {
+  width: 48px;
+  height: 48px;
   color: #07326b;
   font-weight: 700;
   text-decoration: none;
   border: 1px solid #cbd5e1;
-  padding: 10px 14px;
-  border-radius: 8px;
-  max-width: 210px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: #ffffff;
 }
 
 .home-user-name:hover {
@@ -117,6 +129,8 @@ a {
 
 .home-logout-btn {
   border: 1px solid #fecaca;
+  height: 48px;
+  font-size: 20px;
   background: #fff5f5;
   color: #991b1b;
   padding: 10px 14px;
@@ -144,32 +158,37 @@ a {
 /* Navbar */
 
 .navbar {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 42px 18px;
+  width: 100%;
+  margin: 0;
+  padding: 0 70px 18px;
   display: flex;
   justify-content: center;
-  gap: 42px;
+  gap: 18px;
 }
 
 .home-tab-btn {
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
   color: #475569;
   font-weight: 700;
-  padding: 12px 0;
+  padding: 12px 18px;
   cursor: pointer;
-  font-size: 15px;
-  border-bottom: 3px solid transparent;
+  font-size: 18px;
+  border-radius: 12px;
+  transition: 0.2s ease;
 }
 
 .home-tab-btn:hover {
   color: #07326b;
+  background: #f1f5f9;
+  border-color: #d9dee7;
 }
 
 .home-tab-btn.active {
   color: #07326b;
-  border-bottom-color: #07326b;
+  background: #e9f8fd;
+  border-color: #7cc9dc;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
 }
 
 /* Panels */
@@ -185,9 +204,9 @@ a {
 /* Hero */
 
 .hero {
-  max-width: 1180px;
-  margin: 30px auto 0;
-  min-height: 430px;
+  width: 100%;
+  margin: 0;
+  min-height: 500px;
   background:
     linear-gradient(
       rgba(9, 37, 72, 0.55),
@@ -200,7 +219,7 @@ a {
 }
 
 .hero-overlay {
-  min-height: 430px;
+  min-height: 500px;
   padding: 70px 40px;
   display: flex;
   align-items: center;
@@ -248,9 +267,9 @@ a {
 /* About */
 
 .about-section {
-  max-width: 1080px;
-  margin: 54px auto 0;
-  padding: 44px;
+  max-width: 1180px;
+  margin: 56px auto 0;
+  padding: 56px;
   background: #ffffff;
   border: 1px solid #d9dee7;
   display: grid;
@@ -484,13 +503,15 @@ a {
 /* Why section */
 
 .why-section {
-  max-width: 1080px;
+  width: 100%;
   margin: 56px auto 0;
-  padding: 0 34px;
+  padding: 60px 70px;
+  background: #ffffff;
 }
 
 .service-grid {
-  margin-top: 38px;
+  max-width: 1180px;
+  margin: 38px auto 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 26px;
@@ -532,13 +553,14 @@ a {
 /* University Search */
 
 .university-search-section {
-  max-width: 980px;
-  margin: 56px auto 0;
-  padding: 0 34px 56px;
+  width: 100%;
+  margin: 0;
+  padding: 70px 34px;
+  background: #e9f8fd;
 }
 
 .university-search-box {
-  max-width: 760px;
+  max-width: 860px;
   margin: 0 auto;
   background: #ffffff;
   border: 1px solid #d9dee7;
@@ -843,6 +865,11 @@ a {
   object-fit: contain;
 }
 
+.footer-email {
+  text-align: right;
+  justify-self: end;
+}
+
 .footer-email p {
   margin: 0;
 }
@@ -863,26 +890,67 @@ a {
 
 /* Tablet */
 
+/* Tablet */
+
 @media (max-width: 950px) {
   .top-header {
-    grid-template-columns: 120px 1fr auto;
+    padding: 16px 28px;
+    grid-template-columns: 130px 1fr 180px;
+    gap: 18px;
   }
 
   .logo {
-    width: 88px;
-    height: 88px;
+    width: 110px;
+    height: 110px;
+  }
+
+  .brand-text {
+    text-align: center;
+    justify-self: center;
   }
 
   .brand-text h1 {
     font-size: 28px;
   }
 
+  .brand-text p {
+    font-size: 14px;
+  }
+
   .home-auth-area {
-    grid-column: 1 / -1;
+    grid-column: auto;
+    justify-self: end;
     justify-content: flex-end;
   }
 
+  .login-btn {
+    padding: 10px 14px;
+    font-size: 18px;
+  }
+
+  .home-user-menu {
+    gap: 8px;
+  }
+
+  .home-user-name {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    font-size: 22px;
+  }
+
+  .home-logout-btn {
+    font-size: 20px;
+    height: 48px;
+    padding: 0 14px;
+  }
+
+  .menu-btn {
+    display: none;
+  }
+
   .navbar {
+    padding: 0 28px 16px;
     flex-wrap: wrap;
     gap: 26px;
   }
@@ -940,54 +1008,90 @@ a {
 
 @media (max-width: 650px) {
   .top-header {
-    padding: 14px 18px;
-    grid-template-columns: 1fr auto;
+    padding: 14px 18px 18px;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    gap: 10px 12px;
   }
 
   .brand-area {
+    grid-column: 1;
+    grid-row: 1;
     justify-content: flex-start;
   }
 
   .logo {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
   }
 
   .brand-text {
-    grid-column: 1 / -1;
-    text-align: left;
+    grid-column: 2;
+    grid-row: 1;
+    text-align: center;
+    justify-self: center;
   }
 
   .brand-text h1 {
-    font-size: 22px;
+    font-size: 20px;
+    line-height: 1.18;
   }
 
   .brand-text p {
-    font-size: 13px;
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.3;
   }
 
   .menu-btn {
-    display: block;
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    width: 48px;
+    height: 44px;
+    font-size: 24px;
   }
 
   .home-auth-area {
-    grid-column: 1 / -1;
-    justify-content: stretch;
+    grid-column: 2 / 4;
+    grid-row: 2;
+    width: auto;
+    justify-self: end;
+    justify-content: flex-end;
+    margin-top: 2px;
   }
 
   .login-btn {
-    width: 100%;
+    width: auto;
+    min-width: 150px;
+    padding: 10px 16px;
+    font-size: 16px;
   }
 
   .home-user-menu {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr auto;
+    width: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
   }
 
   .home-user-name {
-    max-width: none;
-    text-align: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: 21px;
+  }
+
+  .home-logout-btn {
+    font-size: 18px;
+    height: 44px;
+    padding: 0 14px;
   }
 
   .navbar {
@@ -1004,16 +1108,21 @@ a {
   .home-tab-btn {
     width: 100%;
     text-align: left;
-    padding: 14px 0;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 13px 16px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    font-size: 17px;
   }
 
   .home-tab-btn.active {
-    border-bottom-color: #07326b;
+    background: #e9f8fd;
+    border-color: #7cc9dc;
   }
 
+
   .hero {
-    margin: 18px 14px 0;
+    margin: 0;
     min-height: 360px;
   }
 
@@ -1030,14 +1139,28 @@ a {
     font-size: 16px;
   }
 
+  .hero-search-btn {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
   .about-section {
     margin: 38px 14px 0;
     padding: 28px 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .about-visual {
+    min-height: auto;
   }
 
   .about-illustration {
     width: 100%;
     max-width: 320px;
+  }
+
+  .about-content {
+    text-align: center;
   }
 
   .about-content h2 {
@@ -1061,18 +1184,38 @@ a {
     font-size: 30px;
   }
 
+  .section-title p {
+    font-size: 16px;
+  }
+
+  .austria-info-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
   .austria-text {
     padding: 24px 20px;
   }
 
-  .service-grid {
-    grid-template-columns: 1fr;
+  .austria-stats strong {
+    font-size: 36px;
   }
 
-  .why-section,
+  .why-section {
+    padding: 42px 18px;
+  }
+
+  .service-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .service-grid article {
+    padding: 26px 20px;
+  }
+
   .university-search-section {
-    padding-left: 18px;
-    padding-right: 18px;
+    padding: 48px 18px;
   }
 
   .university-search-box {
@@ -1080,9 +1223,17 @@ a {
     border-radius: 20px;
   }
 
-  .university-search-box h2,
-  .content-page h2 {
+  .university-search-box h2 {
     font-size: 30px;
+  }
+
+  .university-search-form input {
+    padding: 15px 14px;
+    font-size: 15px;
+  }
+
+  .university-results {
+    max-height: 260px;
   }
 
   .content-page {
@@ -1090,8 +1241,34 @@ a {
     padding: 38px 24px;
   }
 
+  .content-page h2 {
+    font-size: 30px;
+  }
+
   .content-page > p {
     font-size: 16px;
+  }
+
+  .content-lines,
+  .guidance-flow {
+    grid-template-columns: 1fr;
+    border-top: none;
+  }
+
+  .content-lines article,
+  .guidance-flow article {
+    padding: 20px 0;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .content-lines article + article,
+  .guidance-flow article + article {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .document-list div {
+    grid-template-columns: 44px 1fr;
   }
 
   .footer {
@@ -1103,6 +1280,11 @@ a {
 
   .social-links {
     justify-content: center;
+  }
+
+  .footer-email {
+    text-align: center;
+    justify-self: center;
   }
 
   .footer-bottom {

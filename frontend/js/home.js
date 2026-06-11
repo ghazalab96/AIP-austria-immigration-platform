@@ -35,7 +35,8 @@ const loadHomeUserProfile = async () => {
   }
 
   if (homeUserName) {
-    homeUserName.textContent = user.email;
+  homeUserName.textContent = "👤";
+  homeUserName.setAttribute("title", user.email);
   }
 
   try {
@@ -54,7 +55,8 @@ const loadHomeUserProfile = async () => {
     }
 
     if (homeUserName && profile.fullName) {
-      homeUserName.textContent = profile.fullName;
+      homeUserName.textContent = "👤";
+      homeUserName.setAttribute("title", profile.fullName);
     }
   } catch (error) {
     console.log("Could not load profile on home page");
@@ -130,7 +132,9 @@ if (heroSearchBtn) {
   });
 }
 
-// University search
+
+//university search
+
 const setupUniversitySearch = () => {
   const universitySearchInput = document.getElementById("universitySearchInput");
   const universityResults = document.getElementById("universityResults");
@@ -140,12 +144,15 @@ const setupUniversitySearch = () => {
   }
 
   let searchTimeout;
+  let latestSearchId = 0;
 
-  const searchUniversities = async () => {
-    const searchValue = universitySearchInput.value.trim();
+  const clearUniversityResults = () => {
+    universityResults.innerHTML = "";
+  };
 
+  const searchUniversities = async (searchValue, searchId) => {
     if (searchValue === "") {
-      universityResults.innerHTML = "";
+      clearUniversityResults();
       return;
     }
 
@@ -161,6 +168,13 @@ const setupUniversitySearch = () => {
       );
 
       const universities = await response.json();
+
+      const currentInputValue = universitySearchInput.value.trim();
+
+      if (currentInputValue === "" || searchId !== latestSearchId) {
+        clearUniversityResults();
+        return;
+      }
 
       if (!response.ok) {
         universityResults.innerHTML = `
@@ -205,6 +219,13 @@ const setupUniversitySearch = () => {
         })
         .join("");
     } catch (error) {
+      const currentInputValue = universitySearchInput.value.trim();
+
+      if (currentInputValue === "" || searchId !== latestSearchId) {
+        clearUniversityResults();
+        return;
+      }
+
       universityResults.innerHTML = `
         <div class="university-result-card">
           <p>Could not connect to the server.</p>
@@ -216,8 +237,18 @@ const setupUniversitySearch = () => {
   universitySearchInput.addEventListener("input", () => {
     clearTimeout(searchTimeout);
 
+    const searchValue = universitySearchInput.value.trim();
+    latestSearchId++;
+
+    if (searchValue === "") {
+      clearUniversityResults();
+      return;
+    }
+
+    const currentSearchId = latestSearchId;
+
     searchTimeout = setTimeout(() => {
-      searchUniversities();
+      searchUniversities(searchValue, currentSearchId);
     }, 400);
   });
 };

@@ -6,8 +6,19 @@
     "preferredDate": "2026-12-25",
     "preferredTime": "10:23",
     "message": "I want a session.",
-    "status": "rejected",
+    "status": "confirmed",
     "createdAt": "2026-06-10T12:31:00.676Z",
-    "updatedAt": "2026-06-10T13:27:01.119Z"
+    "updatedAt": "2026-06-11T08:49:16.993Z"
+  },
+  {
+    "id": 1781167718415,
+    "userId": 1778499015175,
+    "topic": "University admission question",
+    "preferredDate": "2027-02-01",
+    "preferredTime": "10:20",
+    "message": "I want a session",
+    "status": "confirmed",
+    "createdAt": "2026-06-11T08:48:38.415Z",
+    "updatedAt": "2026-06-11T09:07:24.921Z"
   }
 ]
