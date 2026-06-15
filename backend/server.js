@@ -2,7 +2,6 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const applicationRoutes = require("./routes/application.routes");
 const visaRoutes = require("./routes/visa.routes");
 const path = require("path");
 
@@ -23,7 +22,6 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/applications", applicationRoutes);
 app.use("/api/visa", visaRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/checklist", checklistRoutes);
