@@ -82,6 +82,9 @@
             <a href="#university-search-section" class="hero-search-btn">
               Find University
             </a>
+            <a href="#currency-converter-section" class="hero-search-btn">
+              Currency Converter
+            </a>
           </div>
         </div>
       </section>
@@ -199,6 +202,62 @@
         </div>
      
     </section>
+
+    <section
+      class="currency-converter-section"
+      id="currency-converter-section">
+
+      <div class="currency-card">
+
+        <h2>Currency Converter</h2>
+
+        <p>
+          Convert currencies using real-time exchange rates.
+        </p>
+
+        <div class="currency-form">
+
+          <input
+            type="number"
+            id="currencyAmount"
+            placeholder="Enter amount"
+            min="0">
+
+          <select id="fromCurrency">
+            <option value="EUR">🇪🇺 EUR</option>
+            <option value="USD">🇺🇸 USD</option>
+            <option value="GBP">🇬🇧 GBP</option>
+            <option value="CHF">🇨🇭 CHF</option>
+            <option value="CAD">🇨🇦 CAD</option>
+            <option value="AUD">🇦🇺 AUD</option>
+            <option value="JPY">🇯🇵 JPY</option>
+          </select>
+
+          <select id="toCurrency">
+            <option value="EUR">🇪🇺 EUR</option>
+            <option value="USD">🇺🇸 USD</option>
+            <option value="GBP">🇬🇧 GBP</option>
+            <option value="CHF">🇨🇭 CHF</option>
+            <option value="CAD">🇨🇦 CAD</option>
+            <option value="AUD">🇦🇺 AUD</option>
+            <option value="JPY">🇯🇵 JPY</option>
+          </select>
+
+          <button
+            type="button"
+            id="convertCurrencyBtn">
+
+            Convert
+
+          </button>
+
+        </div>
+
+        <div id="currencyResult"></div>
+
+      </div>
+    </section>
+
 
     <section class="about-section">
         <div class="about-visual">

@@ -254,3 +254,89 @@ const setupUniversitySearch = () => {
 };
 
 setupUniversitySearch();
+
+// currency converter API
+
+const currencyAmount = document.getElementById("currencyAmount");
+const fromCurrency = document.getElementById("fromCurrency");
+const toCurrency = document.getElementById("toCurrency");
+const convertCurrencyBtn = document.getElementById("convertCurrencyBtn");
+const currencyResult = document.getElementById("currencyResult");
+
+const convertCurrency = async () => {
+
+  const amount =
+    Number(currencyAmount.value);
+
+  if (!amount) {
+
+    currencyResult.textContent =
+      "Please enter an amount";
+
+    return;
+  }
+
+  const from =
+    fromCurrency.value;
+
+  const to =
+    toCurrency.value;
+
+  if (from === to) {
+
+    currencyResult.textContent =
+      `${amount} ${from} = ${amount} ${to}`;
+
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        `https://open.er-api.com/v6/latest/${from}`
+      );
+
+    const data =
+      await response.json();
+
+    if (data.result !== "success") {
+
+      currencyResult.textContent =
+        "Could not load exchange rates.";
+
+      return;
+    }
+
+    const rate =
+      data.rates[to];
+
+    const convertedAmount =
+      amount * rate;
+
+    currencyResult.textContent =
+      `${amount} ${from} = ${convertedAmount.toFixed(2)} ${to}`;
+
+  } catch (error) {
+
+    currencyResult.textContent =
+      "Could not load exchange rates.";
+
+  }
+};
+
+if (convertCurrencyBtn) {
+
+  convertCurrencyBtn.addEventListener(
+    "click",
+    () => {
+
+      console.log("CLICK");
+
+      convertCurrency();
+
+    }
+  );
+
+}
+
