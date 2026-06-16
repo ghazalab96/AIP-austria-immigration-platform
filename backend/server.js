@@ -36,7 +36,6 @@ app.get("/admin", (req, res) => {
 
 const PORT = 5050;
 
-
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
 });
